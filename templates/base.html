@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Guardian AI - {% block title %}Home{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-icon">🛡️</span>
+                <span class="logo-text">Cyber Guardian</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="{{ url_for('dashboard') }}" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="{{ url_for('phishing') }}" class="nav-item">
+                <span class="nav-icon">📧</span>
+                <span>Email Scanner</span>
+            </a>
+            <a href="{{ url_for('url_analyzer') }}" class="nav-item">
+                <span class="nav-icon">🔗</span>
+                <span>URL Checker</span>
+            </a>
+            <a href="{{ url_for('chatbot') }}" class="nav-item">
+                <span class="nav-icon">🤖</span>
+                <span>Security Coach</span>
+            </a>
+            <a href="{{ url_for('quiz') }}" class="nav-item">
+                <span class="nav-icon">🧠</span>
+                <span>Awareness Quiz</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="status-badge online">
+                <span class="status-dot"></span>
+                System Active
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>Security Dashboard</h1>
+    <p>Your real-time security overview</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-label">Total Analyses</div>
+        <div class="stat-value">{{ total }}</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">Average Risk Score</div>
+        <div class="stat-value {% if avg > 50 %}danger{% else %}safe{% endif %}">{{ avg }}%</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">System Status</div>
+        <div class="stat-value safe">Protected</div>
+    </div>
+</div>
+
+<div class="content-grid">
+    <div class="card">
+        <h2>Recent Activity</h2>
+        <div class="activity-list">
+            {% if recent %}
+                {% for item in recent %}
+                <div class="activity-item">
+                    <span class="activity-type">{{ item.type }}</span>
+                    <span class="activity-score {% if item.score > 50 %}danger{% else %}safe{% endif %}">
+                        Score: {{ item.score }}
+                    </span>
+                    <span class="activity-time">{{ item.timestamp.strftime('%H:%M') }}</span>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="empty-state">No analyses yet. Start scanning!</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Recent Quiz Results</h2>
+        <div class="activity-list">
+            {% if quiz_results %}
+                {% for q in quiz_results %}
+                <div class="activity-item">
+                    <span>Quiz Score: {{ q.score }}/{{ q.total }}</span>
+                    <span class="activity-score {% if q.score < q.total|int %}danger{% else %}safe{% endif %}">
+                        {{ (q.score / q.total * 100)|int }}%
+                    </span>
+                    <span class="activity-time">{{ q.timestamp.strftime('%H:%M') }}</span>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="empty-state">No quizzes taken yet. Test your knowledge!</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

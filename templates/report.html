@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Analysis Report{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>Security Analysis Report</h1>
+    <p>Detailed analysis results</p>
+</div>
+
+<div class="report-container">
+    <div class="card report-card">
+        <div class="report-header">
+            <h2>Report #{{ report.id }}</h2>
+            <div class="report-timestamp">{{ report.timestamp }}</div>
+        </div>
+        
+        <div class="report-section">
+            <div class="report-label">Analysis Type</div>
+            <div class="report-value">{{ report.type }}</div>
+        </div>
+        
+        <div class="report-section">
+            <div class="report-label">Analyzed Content</div>
+            <div class="report-value code-block">{{ report.input }}</div>
+        </div>
+        
+        <div class="report-section">
+            <div class="report-label">Threat Level</div>
+            <div class="report-value threat-badge {{ report.threat_level.lower() }}">{{ report.threat_level }}</div>
+        </div>
+        
+        <div class="report-section">
+            <div class="report-label">Risk Score</div>
+            <div class="report-value score-display {% if report.score > 50 %}danger{% else %}safe{% endif %}">
+                {{ report.score }}/100
+            </div>
+        </div>
+        
+        <div class="report-section">
+            <div class="report-label">Severity</div>
+            <div class="report-value">{{ report.severity }}</div>
+        </div>
+        
+        <div class="report-section">
+            <div class="report-label">Summary</div>
+            <div class="report-value">{{ report.summary }}</div>
+        </div>
+        
+        <div class="report-section">
+            <div class="report-label">Recommended Actions</div>
+            <ul class="actions-list">
+                {% for action in report.actions %}
+                <li>{{ action }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+</div>
+{% endblock %}

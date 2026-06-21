@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Security Quiz{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>Cybersecurity Awareness Quiz</h1>
+    <p>Test your knowledge and learn how to stay safe online</p>
+</div>
+
+<div class="quiz-container">
+    {% if result %}
+    <div class="card result-card {% if result.percentage >= 70 %}safe-card{% else %}danger-card{% endif %}">
+        <div class="result-header">
+            <h2>Quiz Complete!</h2>
+            <div class="score-badge {% if result.percentage >= 70 %}safe{% else %}danger{% endif %}">
+                {{ result.score }}/{{ result.total }} ({{ result.percentage }}%)
+            </div>
+        </div>
+        
+        <div class="quiz-review">
+            {% for r in result.results %}
+            <div class="review-item {% if r.is_correct %}correct{% else %}incorrect{% endif %}">
+                <div class="review-question">{{ r.question }}</div>
+                <div class="review-answers">
+                    <div>Your answer: <strong>{{ r.user_answer }}</strong></div>
+                    <div>Correct answer: <strong>{{ r.correct_answer }}</strong></div>
+                </div>
+                <div class="review-explanation">💡 {{ r.explanation }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <a href="{{ url_for('quiz') }}" class="btn btn-primary">Try Again</a>
+    </div>
+    {% else %}
+    <div class="card">
+        <form method="POST" class="quiz-form">
+            {% for q in questions %}
+            <div class="quiz-question">
+                <h3>Question {{ q.id }} of {{ questions|length }}</h3>
+                <p>{{ q.question }}</p>
+                <div class="quiz-options">
+                    {% for option in q.options %}
+                    <label class="quiz-option">
+                        <input type="radio" name="q{{ q.id }}" value="{{ loop.index0 }}" required>
+                        <span>{{ option }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary btn-full">Submit Answers</button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

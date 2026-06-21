@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Email Scanner{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>AI Phishing Email Analyzer</h1>
+    <p>Paste an email to check if it's a phishing attempt</p>
+</div>
+
+<div class="analyzer-container">
+    <div class="card">
+        <form method="POST" class="analyzer-form">
+            <div class="form-group">
+                <label for="subject">Email Subject</label>
+                <input type="text" id="subject" name="subject" class="form-input" placeholder="Enter the email subject line..." required>
+            </div>
+            <div class="form-group">
+                <label for="content">Email Content</label>
+                <textarea id="content" name="content" class="form-textarea" rows="8" placeholder="Paste the full email content here..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Analyze Email</button>
+        </form>
+    </div>
+
+    {% if result %}
+    <div class="card result-card {% if result.score > 50 %}danger-card{% else %}safe-card{% endif %}">
+        <div class="result-header">
+            <h2>Analysis Results</h2>
+            <div class="score-badge {% if result.score > 50 %}danger{% else %}safe{% endif %}">
+                Score: {{ result.score }}/100
+            </div>
+        </div>
+        
+        <div class="severity-bar">
+            <div class="severity-label">Risk Level: <strong>{{ result.severity }}</strong></div>
+        </div>
+        
+        <div class="result-section">
+            <h3>Findings</h3>
+            <ul class="findings-list">
+                {% for finding in result.findings %}
+                <li class="finding-item">{{ finding }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="result-section">
+            <h3>Recommendations</h3>
+            <ul class="recommendations-list">
+                {% for rec in result.recommendations %}
+                <li class="rec-item">{{ rec }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

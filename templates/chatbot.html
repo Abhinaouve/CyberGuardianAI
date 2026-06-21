@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Security Coach{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>AI Security Coach</h1>
+    <p>Ask any cybersecurity question and learn how to stay safe online</p>
+</div>
+
+<div class="chatbot-container">
+    <div class="card chat-card">
+        <div class="chat-header">
+            <div class="chat-avatar">🤖</div>
+            <div>
+                <h3>Cyber Guardian AI</h3>
+                <p>Your personal security coach</p>
+            </div>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                <div class="message-content">
+                    Hello! I'm your AI Security Coach. Ask me anything about cybersecurity!
+                    <br><br>
+                    Try asking:
+                    <ul>
+                        <li>"What is phishing?"</li>
+                        <li>"How do I create a strong password?"</li>
+                        <li>"What is ransomware?"</li>
+                        <li>"How can I secure my Instagram?"</li>
+                    </ul>
+                </div>
+            </div>
+            
+            {% if response %}
+            <div class="message user-message">
+                <div class="message-content">{{ response.question }}</div>
+            </div>
+            <div class="message bot-message">
+                <div class="message-content">{{ response.answer }}</div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <form method="POST" class="chat-input-form">
+            <input type="text" name="question" class="chat-input" placeholder="Type your question here..." required>
+            <button type="submit" class="btn btn-primary chat-send-btn">Ask</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

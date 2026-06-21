@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}URL Checker{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>URL Security Analyzer</h1>
+    <p>Check if a website link is safe before you click it</p>
+</div>
+
+<div class="analyzer-container">
+    <div class="card">
+        <form method="POST" class="analyzer-form">
+            <div class="form-group">
+                <label for="url">Website URL</label>
+                <input type="url" id="url" name="url" class="form-input" placeholder="https://example.com" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Check URL</button>
+        </form>
+    </div>
+
+    {% if result %}
+    <div class="card result-card {% if result.score > 50 %}danger-card{% else %}safe-card{% endif %}">
+        <div class="result-header">
+            <h2>URL Analysis Result</h2>
+            <div class="score-badge {% if result.score > 50 %}danger{% else %}safe{% endif %}">
+                Score: {{ result.score }}/100
+            </div>
+        </div>
+        
+        <div class="url-display">
+            <strong>Checked URL:</strong>
+            <code>{{ result.url }}</code>
+        </div>
+        
+        <div class="severity-bar">
+            <div class="severity-label">Risk Level: <strong>{{ result.severity }}</strong></div>
+        </div>
+        
+        <div class="result-section">
+            <h3>Findings</h3>
+            <ul class="findings-list">
+                {% for finding in result.findings %}
+                <li class="finding-item">{{ finding }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="result-section">
+            <h3>Recommendations</h3>
+            <ul class="recommendations-list">
+                {% for rec in result.recommendations %}
+                <li class="rec-item">{{ rec }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

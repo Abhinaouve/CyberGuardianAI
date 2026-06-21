@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Welcome{% endblock %}
+{% block content %}
+<div class="welcome-container">
+    <div class="welcome-hero">
+        <h1>Your AI Cybersecurity Guardian</h1>
+        <p>Protect yourself from phishing, scams, and online threats with AI-powered analysis.</p>
+        <div class="hero-actions">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg">Go to Dashboard</a>
+            <a href="{{ url_for('phishing') }}" class="btn btn-secondary btn-lg">Scan an Email</a>
+        </div>
+    </div>
+    
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">📧</div>
+            <h3>Email Scanner</h3>
+            <p>Analyze emails for phishing and scam indicators instantly.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔗</div>
+            <h3>URL Checker</h3>
+            <p>Check if a link is safe before you click it.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <h3>Security Coach</h3>
+            <p>Ask questions and learn about cybersecurity.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🧠</div>
+            <h3>Awareness Quiz</h3>
+            <p>Test your cybersecurity knowledge.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
